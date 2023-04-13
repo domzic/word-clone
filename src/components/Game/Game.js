@@ -13,13 +13,11 @@ console.info({ answer });
 function Game() {
   const [guessesList, setGuessesList] = React.useState([]);
   const [guess, setGuess] = React.useState("");
-  console.log("Guess: ", guess);
 
   const handleGuess = (newGuess) => {
     setGuess(newGuess);
     setGuessesList((prev) => [...prev, { guess: newGuess, id: Math.random() }]);
   };
-  console.log(guessesList);
 
   return (
     <>
