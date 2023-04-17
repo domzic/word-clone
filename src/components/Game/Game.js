@@ -15,11 +15,11 @@ console.info({ answer });
 
 function Game() {
   const [guessesList, setGuessesList] = React.useState([]);
-  const [isGameOver, setIsGameOver] = React.useState({ value: false });
+  const [gameStatus, setGameStatus] = React.useState("running");
 
   React.useEffect(() => {
     if (guessesList.length === NUM_OF_GUESSES_ALLOWED) {
-      setIsGameOver({ value: true, status: "lost" });
+      setGameStatus("lost");
     }
   }, [guessesList.length]);
 
@@ -30,17 +30,19 @@ function Game() {
     ]);
 
     if (newGuess === answer) {
-      setIsGameOver({ value: true, status: "won" });
+      setGameStatus("won");
     }
   };
+
+  const inProgress = gameStatus === "running";
 
   return (
     <>
       <GuessesList guesses={guessesList} />
-      <GuessInput handleGuess={handleGuess} disabled={isGameOver.value} />
-      {isGameOver.value && (
+      <GuessInput handleGuess={handleGuess} disabled={!inProgress} />
+      {!inProgress && (
         <Banner
-          won={isGameOver.status === "won"}
+          won={gameStatus === "won"}
           answer={answer}
           guessesCount={guessesList.length}
         />
